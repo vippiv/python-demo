@@ -1,6 +1,50 @@
 # 封装（基于登录功能）
 from selenium import webdriver
+import time
+import xlrd
+import xlsxwriter
 
+
+# 测试日志处理类
+class Logininfo:
+    def __init__(self, path="", mode="w"):
+        file_name = path + time.strftime('%Y-%m-%d', time.gmtime())
+        self.log = open(path + file_name + ".txt", mode, encoding="UTF-8")
+
+    def log_write(self, msg):
+        self.log.write(msg)
+
+    def log_close(self):
+        self.log.close()
+
+
+# 读取excel数据类
+class XlUserinfo:
+    def __init__(self, path=""):
+        self.xl = xlrd.open_workbook(path)
+
+    # Excel中读取的数据都会转成浮点型容易造成错误，必须转成字符串
+    def float_to_str(self, val):
+        if isinstance(val, float):
+            val = str(int(val))
+        return val
+
+    def get_sheet_info(self):
+        listkey = ["username", "pwd"]
+        info_list = []
+        for row in range(1, len(self.sheet.nrows)):
+            info = [self.float_to_str(val) for val in self.sheet.row_values(row)]
+            temp = zip(listkey, info)
+            info_list.append(dict(temp))
+        return info_list
+
+    def get_sheetinfo_by_name(self, name):
+        self.sheet = self.xl.sheet_by_name(name)
+        return self.get_sheet_info()
+
+    def get_sheetinfo_by_index(self, index):
+        self.sheet = self.xl.sheet_by_index(index)
+        return self.get_sheet_info()
 
 # 打开浏览器
 def open_browser():
@@ -84,6 +128,28 @@ def get_webinfo(path):
     return dict
 
 
+# excel操作函数
+def get_webinfo_excel(path):
+    xl = xlrd.open_workbook(path)
+    table = xl.sheets()[0]  # 获取第一张工作表
+    # table = xl.sheet_by_index(0)  # 根据索引获得工作表
+    # table = xl.sheet_by_name("一月")  # 根据名称获得工作表
+    row = table.row_values(0)  # 获取第一行
+    col = table.col_values(0)  # 获取第一列
+    print(table.nrows)  # 行数
+    print(table.ncols)  # 列数
+    print(table.cell(0, 0).value)
+
+
+def write_excel():
+    xl = xlsxwriter.Workbook("ret.xls")  # 创建excel
+    table = xl.add_worksheet("测试报告")  # 创建sheet
+    table.write_string(0, 0, "first")/("A1", "first")  # 写单元格，两种写法，第一种0,0表示第一行第一列，第二种表示A1单元格,=，最后一个参数表示要写入的值
+    table.set_column("C:E", 15)  # 设置单元格宽度
+    xl.close()  # 关闭excel
+
+
+
 if __name__ == "__main__":
     # module_test()
     # file 从文件读取数据信息（如测试100个网站的登录功能）
@@ -91,3 +157,9 @@ if __name__ == "__main__":
     #   get_userinfo(path)  # 读取登录信息
     print(__name__)
     get_webinfo("webinfo.txt")
+    log = Logininfo()
+    log.log_write("测试报告")
+    log.log_close()
+
+
+
