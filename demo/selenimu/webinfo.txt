@@ -1,0 +1,4 @@
+weburl = http://www.baidu.com
+account=admin
+pwd=123456
+login_txt=登录
