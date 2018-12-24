@@ -3,25 +3,26 @@ from urllib import request
 from lxml import etree  # lxml模块不是自带的，需要安装
 
 
-def get_html(url):
+def get_html(url, handler):
     """
     获取指定url页面的内容
-    :param url:
+    :param url: 页面地址
+    :param handler: 处理函数
     :return:
     """
-    # try:
-    headers = {
-        'User-Agent': r'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                      r'Chrome/45.0.2454.85 Safari/537.36 115Browser/6.0.3',
-        'Connection': 'keep-alive'
-    }
-    req = request.Request(url, headers=headers)
-    html = request.urlopen(req).read()
-    # 处理编码
-    html = html.decode('utf-8')
-    parse_detail_html(html)
-    # except Exception as result:
-    #     print(result)
+    try:
+        headers = {
+            'User-Agent': r'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
+                          r'Chrome/45.0.2454.85 Safari/537.36 115Browser/6.0.3',
+            'Connection': 'keep-alive'
+        }
+        req = request.Request(url, headers=headers)
+        html = request.urlopen(req).read()
+        # 处理编码
+        html = html.decode('utf-8')
+        handler(html)
+    except Exception as result:
+        print(result)
 
 
 def parse_detail_html(html_str):
@@ -49,7 +50,12 @@ def parse_list_html(html_str):
     :param html_str:
     :return:
     """
-    pass
+    selector = etree.HTML(html_str)
+    data = selector.xpath('//ul[@class="list_14"]//li')
+    for item in data:
+        print(item[0].xpath('string(.)'))
 
 
-get_html(r'https://finance.sina.com.cn/chanjing/gsnews/2018-12-24/doc-ihmutuee2060813.shtml')
+# get_html(r'https://finance.sina.com.cn/chanjing/gsnews/2018-12-24/doc-ihmutuee2060813.shtml', parse_detail_html)
+
+# get_html(r'https://news.sina.com.cn/', parse_list_html)
