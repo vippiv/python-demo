@@ -19,14 +19,14 @@ def get_html(url):
     html = request.urlopen(req).read()
     # 处理编码
     html = html.decode('utf-8')
-    parse_html(html)
+    parse_detail_html(html)
     # except Exception as result:
     #     print(result)
 
 
-def parse_html(html_str):
+def parse_detail_html(html_str):
     """
-    解析html
+    解析html（解析的是详情页数据）
     从html中解析出需要的文本
     :param html_str: html字符串
     :return:
@@ -40,6 +40,16 @@ def parse_html(html_str):
     print(desc)
     print(content)
     print(imgs)
+
+
+def parse_list_html(html_str):
+    """
+    解析html（解析的是列表页数据）
+    从html中解析出需要的文本
+    :param html_str:
+    :return:
+    """
+    pass
 
 
 get_html(r'https://finance.sina.com.cn/chanjing/gsnews/2018-12-24/doc-ihmutuee2060813.shtml')
