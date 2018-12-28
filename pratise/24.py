@@ -46,4 +46,5 @@ def make_ajax_url(No):
     """ 返回ajax请求的url """
     return "http://huaban.com/favorite/beauty/?i5p998kw&max=" + No + "&limit=20&wfl=1"
 
+
 get_ajax_data(r'http://huaban.com/favorite/beauty/')
