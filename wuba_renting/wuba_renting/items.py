@@ -11,4 +11,7 @@ import scrapy
 class WubaRentingItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    type = scrapy.Field()  # 租房类型：整租，单间
+    layout = scrapy.Field()  # 房型
+    area = scrapy.Field()  # 面积
+    price = scrapy.Field()  # 单价
