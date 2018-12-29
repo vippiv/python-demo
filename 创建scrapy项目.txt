@@ -1,0 +1,4 @@
+1、直接命令行执行scrapy startproject project_name（项目名）
+2、命令执行成功后会在当前文件夹下生成一个叫project_name的文件夹
+3、cd project_name 进入文件夹
+4、生成自己的爬虫，执行命令scrapy genspider spider_name website

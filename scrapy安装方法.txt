@@ -1,0 +1,9 @@
+1、安装lxml
+2、安装pyopenssl，语法pip install pyOpenSSL
+3、安装Twisted http://www.lfd.uci.edu/~gohlke/pythonlibs/#twisted，先到以上网址上下载：Twisted-18.9.0-cp36-cp36m-win_amd64.whl
+	3.1、没安装过wheel的要先安装这个，pip install wheel
+	3.2、cd到Twisted-18.9.0-cp36-cp36m-win_amd64.whl所在的目录，执行 pip install Twisted-18.9.0-cp36-cp36m-win_amd64.whl
+	3.3、有时会报当前wheel不支持当前平台，请换一个版本Twist
+4、安装pywin32，pip install pywin32
+5、安装scrapy，语法pip install scrapy
+6、在命令行输入import scrapy，不报错即表示安装成功
