@@ -13,7 +13,7 @@ class MySpiderItem(scrapy.Item):
     # name = scrapy.Field()
     id = scrapy.Field()  # 房产id
     title = scrapy.Field()  # 房产名称
-    address = scrapy.Field()  # 房产地址
+    # address = scrapy.Field()  # 房产地址
     unit_price = scrapy.Field()  # 房产单价
     total_price = scrapy.Field()  # 房产总价
     acreage = scrapy.Field()  # 房产面积
