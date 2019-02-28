@@ -1,4 +1,4 @@
-# 字典，在JavaScript中叫对象
+# 字典，在JavaScript中叫对象，只是名字不同
 person = {
     "name": 'zwl',
     "age": 20,
