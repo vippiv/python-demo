@@ -3,6 +3,7 @@ from utils import login_log
 import pymysql
 import pymysql.cursors
 import config
+
 app = Flask(__name__)
 app.config.from_object(config)
 
