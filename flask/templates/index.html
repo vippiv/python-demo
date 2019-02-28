@@ -6,11 +6,30 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>index</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
 </head>
 <body>
-这是模板文件
-<p>用户名：{{username}}</p>
-<p>性别：{{gender}}</p>
-<p>年龄：{{age}}</p>
+<div class="container">
+    <p><a href="{{ url_for('article_list') }}">文章(不管url如何变都无所谓)</a></p>
+    <p><a href="/filter/">过滤器</a></p>
+    <p><a href="/extends/">继承</a></p>
+    <p><a href="/session/">session</a></p>
+    <p><a href="/getsession/">get session</a></p>
+    <p><a href="/from/">from</a></p>
+    <p><a href="/g/">g 对象</a></p>
+    这是模板文件
+    <p>用户名：{{username}}</p>
+    <p>性别：{{gender}}</p>
+    <p>年龄：{{age}}</p>
+
+    {% if child and child.age > 3 %}
+        <h3>子女</h3>
+        <p>{{child.name}}</p>
+        <p>{{child.age}}</p>
+    {% else %}
+        <a href="/login">登录</a>
+    {% endif %}
+</div>
 </body>
 </html>

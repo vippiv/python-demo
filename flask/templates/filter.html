@@ -1,0 +1,26 @@
+<!--
+// +----------------------------------------------------------------------
+// | filter
+// +----------------------------------------------------------------------
+// | Author: 470211273@qq.com
+// +----------------------------------------------------------------------
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>过滤器</title>
+</head>
+<body>
+<h3>过滤器</h3>
+<img src="{{ avatar|default('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551084996069&di=028e4e958cbc9f3e84fec8d2e137c8ba&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a3865ab91314a8012062e3c38ff6.png%401280w_1l_2o_100sh.png') }}" alt="">
+<hr>
+<p>评论数：({{comments|length}})</p>
+{% for comment in comments %}
+    <ul>
+        <li>作者：<a href="#">{{comment.user}}</a></li>
+        <li>内容：{{comment.content}}</li>
+    </ul>
+{% endfor %}
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!--
+// +----------------------------------------------------------------------
+// | from
+// +----------------------------------------------------------------------
+// | Author: 2851986856@qq.com
+// +----------------------------------------------------------------------
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>from</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+</head>
+<body>
+    <div class="container">
+        <h2>from</h2>
+        <form action="" method="post">
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-xs-2">用户名：</div>
+                <div class="col-xs-10"><input type="text" name="username" class="form-control username"></div>
+            </div>
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-xs-2">密码：</div>
+                <div class="col-xs-10"><input type="text" name="password" class="form-control password"></div>
+            </div>
+            <div class="row" style="margin-bottom: 10px;">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-10"><input type="submit" class="btn btn-primary" value="提交"></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <p>用户名：{{username}}</p>
+                    <p>密码：{{password}}</p>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

@@ -22,7 +22,7 @@ for item in person:
 
 # 字典取值
 print("+" * 100)
-print("姓名： %s" % person["name"]) # 取不存在的值会报错
+print("姓名： %s" % person["name"])  # 取不存在的值会报错
 
 
 # 字典修改
