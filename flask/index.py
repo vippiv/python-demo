@@ -1,11 +1,30 @@
 from flask import Flask, url_for, render_template, redirect, session, request, g
 from utils import login_log
-import pymysql
-import pymysql.cursors
+from flask_sqlalchemy import SQLAlchemy
 import config
 
 app = Flask(__name__)
 app.config.from_object(config)
+db = SQLAlchemy(app)
+
+
+class User(db.Model):
+    __tablename__ = "user"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String(100), nullable=False)
+
+
+class Article(db.Model):
+    __tablename__ = "article"
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(100), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    # 定义关系
+    author = db.relationship('User', backref=db.backref('articles'))
+
+
+db.create_all()
 
 
 @app.route('/')
@@ -61,21 +80,37 @@ def extends_block():
 
 @app.route("/articles/")
 def article_list():
-    db = pymysql.connect(host='localhost', user='root', password='', db='test', port=3306, charset='utf8')
-    # 使用 cursor() 方法创建一个游标对象 cursor
-    cursor = db.cursor()
-    # 使用 execute() 方法执行 SQL，如果表存在则删除
-    cursor.execute("DROP TABLE IF EXISTS EMPLOYEE")
-    # 使用预处理语句创建表
-    sql = """CREATE TABLE EMPLOYEE (
-     FIRST_NAME CHAR(20) NOT NULL,
-     LAST_NAME CHAR(20),
-     AGE INT,
-     SEX CHAR(1),
-     INCOME FLOAT )"""
-    cursor.execute(sql)
-    # 关闭数据库连接
-    db.close()
+    # # 增加
+    # a1 = Article(title='gg', content='tyjj', author_id=1)
+    # db.session.add(a1)
+    # # 事务
+    # db.session.commit()
+
+    #  查文章
+    # a1 = Article.query.filter(Article.title == "aa").first()
+    # print("title: %s" % a1.title)
+    # print("content: %s" % a1.content)
+
+    # 找文章标题为aa的作者
+    # a1 = Article.query.filter(Article.title == "aa").first()
+    # print("username:%s" % a1.author.username)
+
+    # 找指定用户的所有文章
+    user = User.query.filter(User.username == "li").first()
+    result = user.articles
+    for article in result:
+        print('-'*10)
+        print(article.title)
+
+    # # 改
+    # a1 = Article.query.filter(Article.title == "aa").first()
+    # a1.title = "new title"
+    # db.session.commit()
+
+    # # 删
+    # a1 = Article.query.filter(Article.content == "bb").first()
+    # db.session.delete(a1)
+    # db.session.commit()
 
     article_li = [
         {
@@ -98,6 +133,14 @@ def article_list():
         }
     ]
     return render_template('article_list.html', articles=article_li)
+
+
+@app.route('/user/')
+def user_list():
+    u1 = User(username="li")
+    db.session.add(u1)
+    db.session.commit()
+    return render_template("user.html")
 
 
 # 动态路由
