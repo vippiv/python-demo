@@ -1,6 +1,8 @@
 from flask import Flask, render_template, url_for, request, redirect, session
 from exts import db
 from models import User, Question
+from functools import wraps
+from decorators import login_required
 import config
 
 app = Flask(__name__)
@@ -69,6 +71,7 @@ def logout():
 
 # 发布问答
 @app.route('/question/', methods=["GET", 'POST'])
+@login_required
 def question():
     if request.method == 'GET':
         return render_template('question.html')
@@ -77,6 +80,9 @@ def question():
         content = request.form.get('content')
 
         q = Question(title=title, content=content)
+        user_id = session.get('user_id')
+        user = User.query.filter(User.id == user_id).first()
+        q.author = user
         db.session.add(q)
         db.session.commit()
 
