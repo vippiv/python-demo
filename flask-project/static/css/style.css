@@ -1,4 +1,13 @@
-.logo{
-    max-width: 100%;
-    max-height: 100%;
+.user_main, .question_main{
+    padding: 20px;
+    width: 600px;
+    background-color: white;
+    margin: 0 auto;
+}
+.login_text, .publish_text{
+    margin: 0 0 20px 0;
+    font-size: 26px;
+}
+.question_main{
+    width: 700px;
 }

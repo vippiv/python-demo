@@ -1,0 +1,16 @@
+body{
+    background-color: #F3F3F3;
+}
+.l{
+    float: left;
+}
+.r{
+    float: right;
+}
+.mb20{
+    margin-bottom: 20px;
+}
+.logo{
+    max-width: 100%;
+    max-height: 100%;
+}

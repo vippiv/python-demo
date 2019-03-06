@@ -13,7 +13,7 @@ DATABASE = 'pythoncms'
 # 随机字符串，一般用random自动生成
 SECRET_KEY = os.urandom(24)
 # 当设置session.permanent = True时，下面的参数将决定有效期多久
-PERMANENT_SESSION_LIFETIME = 7
+PERMANENT_SESSION_LIFETIME = 700
 
 SQLALCHEMY_DATABASE_URI = '{}+{}://{}:{}@{}:{}/{}?charset=utf8'.format(DIALECT, DRIVER, USERNAME, PASSRORD, HOST, PORT, DATABASE)
 

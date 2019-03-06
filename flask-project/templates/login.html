@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title%}登录{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+{% endblock %}
+
+{% block main %}
+    <div class="user_main">
+        <form action="" method="post">
+            <h1 class="text-center login_text">登录</h1>
+            <div class="row form-group">
+                <div class="col-md-2"><label for="username">账号: </label></div>
+                <div class="col-md-10"><input type="text" class="form-control" name="username" id="username" placeholder="用户名"></div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-2"><label for="password">密码: </label></div>
+                <div class="col-md-10"><input type="text" class="form-control" name="password" id="password" placeholder="密码"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-10 text-right">
+                    <button type="submit" class="btn btn-primary">登录</button>
+                    <button type="reset" class="btn btn-default">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
