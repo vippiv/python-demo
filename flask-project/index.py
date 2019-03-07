@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect, session
 from exts import db
-from models import User, Question
+from models import User, Question, Comment
 from functools import wraps
 from decorators import login_required
 import config
@@ -12,14 +12,40 @@ db.init_app(app)
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    questions = Question.query.order_by('-create_time').all()
+    return render_template("index.html", questions=questions)
+
+
+# 问题详情
+@app.route('/q-detail/<id>')
+def question_detail(id):
+    question_model = Question.query.filter(Question.id == id).first()
+    return render_template('question_detail.html', question=question_model)
+
+
+# 评论
+@app.route('/add_comment/', methods=["POST"])
+@login_required
+def add_comment():
+    content = request.form.get("comment")
+    question_id = request.form.get("question_id")
+
+    comment = Comment(content=content)
+    user_id = session['user_id']
+    user = User.query.filter(User.id == user_id).first()
+    comment.author = user
+    question = Question.query.filter(Question.id == question_id).first()
+    comment.question = question
+    db.session.add(comment)
+    db.session.commit()
+    return redirect(url_for('question_detail', id=question_id))
 
 
 # 登录
 @app.route('/login/', methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        return render_template("login.html",)
+        return render_template("login.html")
     else:
         username = request.form.get('username')
         password = request.form.get('password')
@@ -86,7 +112,7 @@ def question():
         db.session.add(q)
         db.session.commit()
 
-        return "保存成功"
+        return redirect(url_for("index"))
 
 
 # 上下文钩子函数

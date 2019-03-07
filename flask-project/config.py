@@ -8,7 +8,7 @@ USERNAME = 'root'
 PASSRORD = ''
 HOST = '127.0.0.1'
 PORT = '3306'
-DATABASE = 'pythoncms'
+DATABASE = 'bat_sys'
 
 # 随机字符串，一般用random自动生成
 SECRET_KEY = os.urandom(24)

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}详情{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+{% endblock %}
+
+{% block main %}
+<div class="container detail_main">
+    <h1 class="title">{{question.title}}</h1>
+    <div class="desc"><div><b>作者：</b>{{question.author.username}}</div><div><b>创建时间：</b>{{question.create_time}}</div></div>
+    <div class="content">
+        {{question.content}}
+    </div>
+    <hr>
+    <div class="comment">
+        <h4>评论（0）：</h4>
+        <form action="{{url_for('add_comment')}}" method="post">
+            <div class="form-group">
+                <input type="text" class="form-control" name="comment" placeholder="请填写评论">
+                <input type="hidden" name="question_id" value="{{question.id}}">
+            </div>
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary">立即评论</button>
+            </div>
+        </form>
+        <ul class="comment_list">
+            {% for comment in question.comments %}
+            <li>
+                <div class="info">
+                    <span class="avatar"><img src="{{url_for('static', filename='img/batman_logo.png')}}" alt=""></span>
+                    <span class="username">{{comment.author.username}}</span>
+                    <span class="time">{{comment.create_time}}</span>
+                </div>
+                <div class="content">{{comment.content}}</div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

@@ -1,10 +1,24 @@
 {% extends "base.html" %}
 {% block title %}首页{% endblock %}
 {% block head %}
-
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
 {% endblock %}
+
 {% block main %}
-这是首页
+<div class="container index_main">
+    {% for item in questions %}
+    <div class="row index_article_item">
+        <div class="col-md-1">
+            <img src="{{url_for('static', filename='img/batman_logo.png')}}" class="i_logo">
+        </div>
+        <div class="col-md-11">
+            <div class="col-md-12"><p class="title"><a href="{{url_for('question_detail', id=item.id)}}">{{item.title}}</a></p></div>
+            <div class="col-md-12"><p class="desc">{{item.content}}</p></div>
+            <div class="col-md-12"><p class="time">{{item.create_time}}</p></div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
 
 {% block script %}
