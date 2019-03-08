@@ -16,6 +16,13 @@ def index():
     return render_template("index.html", questions=questions)
 
 
+@app.route('/q-list/<page>')
+def question_list(page):
+    page = int(page)
+    questions = Question.query.order_by('-create_time').paginate(page=page, per_page=6)
+    return render_template("question_list.html", questions=questions)
+
+
 # 问题详情
 @app.route('/q-detail/<id>')
 def question_detail(id):

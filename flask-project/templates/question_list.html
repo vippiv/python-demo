@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+{% endblock %}
+
+{% block main %}
+<div class="container index_main">
+    {% for item in questions.items %}
+    <div class="row index_article_item">
+        <div class="col-md-1">
+            <img src="{{url_for('static', filename='img/batman_logo.png')}}" class="i_logo">
+        </div>
+        <div class="col-md-11">
+            <div class="col-md-12"><p class="title"><a href="{{url_for('question_detail', id=item.id)}}">{{item.title}}</a></p></div>
+            <div class="col-md-12"><p class="desc">{{item.content}}</p></div>
+            <div class="col-md-12"><p class="time">{{item.create_time}}</p></div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="container pagnation-wrap">
+    <ul class="pagnation">
+    {#上一页#}
+        {%  if questions.has_prev  %}
+            <li><a href="{{ url_for('question_list',page=questions.prev_num) }}">&laquo;</a></li>
+        {% endif %}
+
+        {#页码#}
+        {% set page_now = questions.page  %}
+        {% set page_count = questions.pages %}
+        {% if questions.pages <= 5 %}
+            {% for p in questions.iter_pages() %}
+                    {% if p == questions.page %}
+                      <li class="current"><a href="javascript:;">{{ p }}</a></li>
+                    {% else %}
+                        <li ><a href="{{ url_for('question_list',page=p) }}">{{ p }}</a></li>
+                    {% endif %}
+            {% endfor %}
+
+
+            {% else %}
+                {%  if page_now-2 >0 %}
+                    <li><a href="{{ url_for('question_list',page=page_now-2) }}">{{ page_now-2 }}</a></li>
+                {% endif %}
+                {% if  page_now-1 >0  %}
+                    <li><a href="{{ url_for('question_list',page=page_now-1) }}">{{ page_now-1 }}</a></li>
+                {% endif %}
+                    <li ><a style="background-color: darkgray;opacity: 0.7;color: black" href="{{ url_for('question_list',page=page_now) }}">{{ page_now }}</a></li>
+                {% if (page_count-page_now) >1  %}
+                    <li><a href="{{ url_for('question_list',page=page_now+1) }}">{{ page_now+1 }}</a></li>
+                {% endif %}
+                {% if (page_count - page_now) >2 %}
+                    <li><a href="{{ url_for('question_list',page=page_now+1) }}">{{ page_now+2 }}</a></li>
+                {% endif %}
+        {% endif %}
+
+    {#下一页#}
+        {%  if questions.has_next  %}
+            <li><a href="{{ url_for('question_list',page=questions.next_num) }}">&raquo;</a></li>
+        {% endif %}
+
+        <li class="no-border"><span style="color: black">页数 ( {{ page_now }}/{{ page_count }} )</span></li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

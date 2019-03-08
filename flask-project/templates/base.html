@@ -35,6 +35,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active"><a href="{{url_for('index')}}">首页 <span class="sr-only">(current)</span></a></li>
+        <li><a href="{{url_for('question_list', page=1)}}">发现 <span class="sr-only">(current)</span></a></li>
         <li><a href="{{url_for('question')}}">发布问答</a></li>
       </ul>
       <form class="navbar-form navbar-left">
