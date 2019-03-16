@@ -1,0 +1,53 @@
+{% extends 'home/base.html' %}
+{% block title %}用户中心{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        {% include 'home/menu.html' %}
+        <div class="col-md-9">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-map-marker">会员信息</span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <form action="" role="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="input_name"><span class="glyphicon glyphicon-map-marker">昵称</span></label>
+                                <input type="text" id="input_name" class="form-control" placeholder="会员名">
+                            </div>
+                            <div class="form-group">
+                                <label for="input_name"><span class="glyphicon glyphicon-map-marker">邮箱</span></label>
+                                <input type="text" id="input_name" class="form-control" placeholder="会员名">
+                            </div>
+                            <div class="form-group">
+                                <label for="input_name"><span class="glyphicon glyphicon-map-marker">手机</span></label>
+                                <input type="text" id="input_name" class="form-control" placeholder="会员名">
+                            </div>
+                            <div class="form-group">
+                                <label for="input_name"><span class="glyphicon glyphicon-map-marker">头像</span></label>
+                                <input type="text" id="input_name" class="form-control" placeholder="会员名">
+                            </div>
+                            <div class="form-group">
+                                <label for="input_name"><span class="glyphicon glyphicon-map-marker">简介</span></label>
+                                <textarea name="jianjie" class="form-control" id="" placeholder="请输入简介" rows="10"></textarea>
+                            </div>
+                            <div class="form-group text-right">
+                                <button class="btn btn-primary">修改密码</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'home/base.html' %}
+{% block title%}评论记录{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        {% include 'home/menu.html' %}
+        <div class="col-md-9">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-map-marker">评论信息</span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="commentList">
+                        <li class="item cl">
+                            <a href="user.html">
+                                <i class="avatar size-L radius">
+                                    <img alt="50x50" src="{{url_for('static', filename='img/default_avatar.png')}}" class="img-circle" style="border:1px solid #abcdef; width: 50px">
+                                </i>
+                            </a>
+                            <div class="comment-main">
+                                <header class="comment-header">
+                                    <div class="comment-meta">
+                                        <a class="comment-author" href="{{ url_for('home.user') }}">用户名</a>
+                                        评论于
+                                        <time title="" datetime="">2019-2-3</time>
+                                    </div>
+                                </header>
+                                <div class="comment-body">
+                                    <p>这里是评论内容</p>
+                                </div>
+                            </div>
+                        </li>
+                </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

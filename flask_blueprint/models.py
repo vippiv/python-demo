@@ -11,7 +11,7 @@ class User(db.Model):
     pwd = db.Column(db.String(100), nullable=False)
     userlogs = db.relationship("Userlog", backref='users')
     comments = db.relationship("Comment", backref='users')
-    moviecol = db.relationship("Moviecol", backref='users')
+    moviecols = db.relationship("Moviecol", backref='users')
 
     def __repr__(self):
         return "<User %s>" % self.username
@@ -47,13 +47,13 @@ class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False, unique=True)
     url = db.Column(db.String(100), nullable=False, unique=True)
-    info = db.Column(db.Text, nullable=False, unique=True)
-    logo = db.Column(db.String(255), nullable=False, unique=True)
-    star = db.Column(db.SmallInteger)
-    playnum = db.Column(db.BigInteger)
-    commentnum = db.Column(db.BigInteger)
+    info = db.Column(db.Text, nullable=False)
+    logo = db.Column(db.String(100), nullable=False, unique=True)
+    star = db.Column(db.SmallInteger, nullable=False)
+    playnum = db.Column(db.BigInteger, nullable=False)
+    commentnum = db.Column(db.BigInteger, nullable=False)
     tag_id = db.Column(db.Integer, db.ForeignKey('tag.id'))
-    area = db.Column(db.String(255), nullable=False, unique=True)
+    area = db.Column(db.String(100), nullable=False, unique=True)
     realse_time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     comments = db.relationship("Comment", backref='movie')
     moviecol = db.relationship("Moviecol", backref='movie')
@@ -67,8 +67,8 @@ class Preview(db.Model):
     __tablename__ = "preview"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False, unique=True)
-    logo = db.Column(db.String(255), nullable=False, unique=True)
-    add_time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    logo = db.Column(db.String(100), nullable=False, unique=True)
+    add_time = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return '<Preview %s>' % self.title
@@ -81,19 +81,19 @@ class Comment(db.Model):
     content = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'))
-    add_time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    add_time = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return '<Preview %s>' % self.id
 
 
 # 电影收藏
-class MovieCol(db.Model):
+class Moviecol(db.Model):
     __tablename__ = "moviecol"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'))
-    add_time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    add_time = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return '<Preview %s>' % self.id
@@ -104,8 +104,8 @@ class Auth(db.Model):
     __tablename__ = "auth"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100), nullable=False, unique=True)
-    url = db.Column(db.String(255), nullable=False, unique=True)
-    add_time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    url = db.Column(db.String(100), nullable=False, unique=True)
+    add_time = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return '<Auth %s>' % self.name
@@ -117,7 +117,7 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(100), nullable=False, unique=True)
     auths = db.Column(db.String(600), nullable=False)
-    add_time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    add_time = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return '<Role %s>' % self.name
@@ -131,7 +131,7 @@ class Admin(db.Model):
     pwd = db.Column(db.String(100), nullable=False)
     is_super = db.Column(db.SmallInteger)
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
-    add_time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    add_time = db.Column(db.DateTime, default=datetime.utcnow)
     adminlog = db.relationship("Adminlog", backref='admin')
     oplog = db.relationship("Oplog", backref='admin')
 
@@ -145,7 +145,7 @@ class Adminlog(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'))
     ip = db.Column(db.String(50))
-    addtime = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    addtime = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return '<Adminilog %s>' % self.id
@@ -157,8 +157,8 @@ class Oplog(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     admin_id = db.Column(db.Integer, db.ForeignKey('admin.id'))
     ip = db.Column(db.String(50))
-    reason = db.Column(db.String(600))
-    addtime = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    reason = db.Column(db.String(100))
+    addtime = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return '<Oplog %s>' % self.id

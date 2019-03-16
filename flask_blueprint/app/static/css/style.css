@@ -1,0 +1,117 @@
+.no-border{
+    border:none !important;
+}
+.user_main, .question_main{
+    padding: 20px;
+    width: 600px;
+    background-color: white;
+    margin: 0 auto;
+}
+.login_text, .publish_text{
+    margin: 0 0 20px 0;
+    font-size: 26px;
+}
+.question_main{
+    width: 700px;
+}
+.index_main, .detail_main{
+    background-color: white;
+}
+
+.index_article_item{
+    border-bottom: 1px solid #EEE;
+}
+.index_article_item .i_logo{
+    max-width: 100%;
+    max-height: 100%;
+    margin-top: 30px;
+}
+.index_article_item .title{
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 2;
+    margin-left: -15px;
+    margin-top: 10px;
+}
+.index_article_item .desc{
+   margin-left: -15px;
+}
+.index_article_item .time{
+    text-align: right;
+}
+
+.detail_main{
+    padding-bottom: 15px;
+}
+.detail_main .title{
+    text-align: center;
+    font-size: 24px;
+}
+.detail_main .content{
+    line-height: 1.8;
+}
+.detail_main .desc{
+    text-align: center;
+    line-height: 3;
+}
+.detail_main .desc > div{
+    display: inline-block;
+    padding: 0 10px;
+}
+.detail_main .comment{
+    width: 60%;
+}
+.comment_list > li{
+    padding: 10px 0;
+    border-bottom: 1px solid #EEE;
+}
+.comment_list .info{
+    margin-bottom: 10px;
+}
+.comment_list .info > span{
+    display: inline-block;
+}
+.comment_list .info .avatar{
+    width: 50px;
+    margin-right: 10px;
+}
+.comment_list .info .avatar img{
+    width: 100%;
+}
+.comment_list .info .username{
+    width: 350px;
+}
+.comment_list .info .time{
+    float: right;
+    text-align: right;
+}
+.comment_list .content{
+    line-height: 2;
+    padding-left: 65px;
+}
+
+.pagnation-wrap{
+    margin: 15px auto;
+    background-color: white;
+    line-height: 2;
+    text-align: center;
+}
+.pagnation{
+    margin: 10px 0;
+}
+.pagnation > li{
+    display: inline-block;
+    border:1px solid #EEE;
+}
+.pagnation > li > a{
+    display: block;
+    padding: 0 10px;
+}
+.pagnation > li.current{
+    border:none;
+}
+.pagnation > li.current a{
+    color: black;
+    text-decoration: none;
+}
+

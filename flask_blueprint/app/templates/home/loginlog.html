@@ -1,0 +1,40 @@
+{% extends 'home/base.html' %}
+{% block title%}登录日志{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        {% include 'home/menu.html' %}
+        <div class="col-md-9">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-map-marker">登录日志</span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>编号</th>
+                            <th>登录时间</th>
+                            <th>登录IP</th>
+                            <th>登录地址</th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}
