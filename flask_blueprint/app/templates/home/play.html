@@ -1,0 +1,72 @@
+{% extends 'home/base.html' %}
+{% block title%}电影详情{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+       <div class="row" style="margin-bottom: 20px;">
+           <div class="col-md-8">
+               <div class="row">
+                <div class="play-area">播放区</div>
+               </div>
+           </div>
+           <div class="col-md-4">
+               <div class="row">
+                   <div class="panel panel-warning">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <span class="glyphicon glyphicon-map-marker">电影信息</span>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                           <table class="table table-bordered">
+                               <tr><td style="width: 90px;">片名</td><td>环太平洋</td></tr>
+                               <tr><td>标签</td><td>环太平洋</td></tr>
+                               <tr><td>片场</td><td>环太平洋</td></tr>
+                               <tr><td>地区</td><td>环太平洋</td></tr>
+                               <tr><td>星级</td><td>环太平洋</td></tr>
+                               <tr><td>上映时间</td><td>环太平洋</td></tr>
+                               <tr><td>播放数量</td><td>环太平洋</td></tr>
+                               <tr><td>评论数量</td><td>环太平洋</td></tr>
+                               <tr><td>影片介绍</td><td>环太平洋</td></tr>
+                           </table>
+                        </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+        <div class="row">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-map-marker">电影评论</span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <div class="login-comment">请先登陆，才能参与评论</div>
+                    <div class="all-comments-nums">全部评论（12）</div>
+                    <div class="comment-content">评论编辑框</div>
+                    <div class="all-comments-box">
+                        {% for i in range(1, 10) %}
+                        <table class="table table-bordered">
+                            <tr>
+                                <td><div class="user-avatar"><img src="{{url_for('static', filename='img/v_movie_logo.jpg')}}" alt=""></div></td>
+                                <td class="p0">
+                                    <p class="addtime">评论时间：2019-4-1</p>
+                                    <div class="content">四斤： 翟天临墙倒众人推，先是被爆料博士论文抄袭，紧接着又被发现高考成绩有问题，进而大家发现，翟天临能考上北京电影学院，是因为黄晓明的指点和帮助，翟天临也不止一次在公众场合感谢和支持黄晓明，现在不少网友</div>
+                                </td>
+                            </tr>
+                        </table>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

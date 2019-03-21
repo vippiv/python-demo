@@ -9,6 +9,7 @@ class User(db.Model):
     username = db.Column(db.String(50), nullable=False)
     mobilephone = db.Column(db.String(11), nullable=False)
     pwd = db.Column(db.String(100), nullable=False)
+
     userlogs = db.relationship("Userlog", backref='users')
     comments = db.relationship("Comment", backref='users')
     moviecols = db.relationship("Moviecol", backref='users')

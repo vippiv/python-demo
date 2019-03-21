@@ -7,6 +7,9 @@ body{
 .r{
     float: right;
 }
+.p0{
+    padding: 0px !important;
+}
 .mb20{
     margin-bottom: 20px;
 }

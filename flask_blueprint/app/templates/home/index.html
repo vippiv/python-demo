@@ -2,14 +2,57 @@
 {% block title %}首页{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename='plugins/swiper-2.7.6/idangerous.swiper.css')}}">
 {% endblock %}
 
 {% block main %}
+<div class="swiper-container swiper-index">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide">Slide 1</div>
+        <div class="swiper-slide">Slide 2</div>
+        <div class="swiper-slide">Slide 3</div>
+        <div class="swiper-slide">Slide 4</div>
+        <div class="swiper-slide">Slide 5</div>
+    </div>
+    <!-- 如果需要分页器 -->
+    <div class="pagination"></div>
+    <!-- 左右方向箭 -->
+    <a class="arrow-left" href="#"></a>
+    <a class="arrow-right" href="#"></a>
+</div>
 <div class="container index_main">
-    这里是首页
+    <div class="row">
+        <table class="table table-bordered">
+            <tr><td style="width: 130px;"><b>电影标签</b></td><td><span class="tag-item">标签一</span><span class="tag-item">标签一</span><span class="tag-item">标签一</span></td></tr>
+            <tr><td><b>电影星级</b></td><td><span class="tag-item">一星</span><span class="tag-item">二星</span><span class="tag-item">三星</span></td></tr>
+            <tr><td><b>上映时间</b></td><td><span class="tag-item">最近</span><span class="tag-item">2018</span><span class="tag-item">2017</span></td></tr>
+            <tr><td><b>播放数量</b></td><td><span class="tag-item">从高到低</span><span class="tag-item">从低到高</span></td></tr>
+            <tr><td><b>电影标签</b></td><td><span class="tag-item">从高到低</span><span class="tag-item">从低到高</span></td></tr>
+        </table>
+    </div>
+    {% for i in range(1,4)%}
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="col-md-3"><div class="m-item">262*166</div></div>
+        <div class="col-md-3"><div class="m-item">262*166</div></div>
+        <div class="col-md-3"><div class="m-item">262*166</div></div>
+        <div class="col-md-3"><div class="m-item">262*166</div></div>
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}
 
 {% block script %}
-
+<script type="application/javascript" src="{{url_for('static', filename='plugins/swiper-2.7.6/idangerous.swiper.js')}}"></script>
+<script>
+    var mySwiper = new Swiper('.swiper-index',{
+            pagination: '.pagination',
+            loop:true,
+            grabCursor: true, // 控制鼠标形状
+            paginationClickable: true, // 启用分页指示器点击事件
+            mode: 'horizontal', // 索引位置需要在css中调整，值（horizontal/vertical）
+            autoplay : 3000,
+            autoplayDisableOnInteraction : false, // 用户操作swiper之后，是否禁止autoplay。默认为true：停止
+            onlyExternal: false, // 禁用鼠标拖拉
+        })
+</script>
 {% endblock %}

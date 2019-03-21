@@ -1,0 +1,26 @@
+{% extends 'home/base.html' %}
+{% block title%}搜索{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="search-tips">与"**"相关的电影，共*部</div>
+        <table class="table table-bordered search-list">
+            {% for i in range(1, 15) %}
+            <tr>
+                <td style="width: 210px;"><div class="preview">preview</div></td>
+                <td>
+                    <p class="title"><a href="#">如何看待 PDD 援建的「皮皮欢乐希望小学」竣工？</a></p>
+                    <div class="desc">一年零八个月以前，PDD曾在直播的时候表示，要建一所希望小学，并邀请观众一起帮忙，给捐献善款的希望小学取个名字。不知道还有人记得这个场景么？</div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+
+{% block script %}
+
+{% endblock %}

@@ -95,6 +95,18 @@ def moviecol():
     return render_template('home/moviecol.html')
 
 
+# 搜索
+@home.route('/search', methods=["GET", "POST"])
+def search():
+    return render_template('home/search.html')
+
+
+# 播放界面-电影详情
+@home.route('/play/')
+def play():
+    return render_template('home/play.html')
+
+
 # 上下文钩子函数，必须有这个，否则前台无法切换登录/注销状态
 @home.context_processor
 def my_context_processor():
