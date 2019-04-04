@@ -1,0 +1,19 @@
+.no-border{
+    border:none !important;
+}
+.user_main{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 20px;
+    width: 600px;
+    height: 220px;
+    background-color: white;
+}
+.login_text, .publish_text{
+    margin: 0 0 20px 0;
+    font-size: 26px;
+}
