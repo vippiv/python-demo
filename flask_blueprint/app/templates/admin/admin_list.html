@@ -4,8 +4,8 @@
     <section class="content-header">
         <h1>微电影管理系统</h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> 预告管理</a></li>
-            <li class="active">预告列表</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> 管理员管理</a></li>
+            <li class="active">管理员列表</li>
         </ol>
     </section>
     <section class="content" id="showcontent">
@@ -13,7 +13,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">预告列表</h3>
+                        <h3 class="box-title">管理员列表</h3>
                         <div class="box-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control pull-right"
@@ -27,30 +27,23 @@
                         </div>
                     </div>
                     <div class="box-body table-responsive no-padding">
+                        {% include 'admin/alert_info.html' %}
                         <table class="table table-hover">
-                            {% include 'admin/alert_info.html' %}
                             <tbody>
                             <tr>
                                 <th>编号</th>
-                                <th>预告标题</th>
-                                <th>预告封面</th>
+                                <th>管理员名称</th>
+                                <th>管理员类型</th>
+                                <th>管理员角色</th>
                                 <th>添加时间</th>
-                                <th>操作事项</th>
                             </tr>
-                            {% for preview in range(11) %}
+                            {% for admin in range(11) %}
                                 <tr>
-                                    <td>preview.id</td>
-                                    <td>preview.title</td>
-                                    <td>
-                                        <img src="" style="max-height: 50px" data-src="holder.js/140x64" class="img-responsive center-block"
-                                             alt="">
-                                    </td>
-                                    <td>preview.add_time</td>
-                                    <td>
-                                        <a class="label label-success" href="#">编辑</a>
-                                        &nbsp;
-                                        <a class="label label-danger" href="#">删除</a>
-                                    </td>
+                                    <td>admin.id</td>
+                                    <td>admin.name</td>
+                                    <td>{% if admin.is_super == 0 %}超级管理员{% else %}普通管理员{% endif %}</td>
+                                    <td>admin.role.name</td>
+                                    <td>admin.add_time</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -69,8 +62,8 @@
     <script>
         // 激活菜单栏
         $(document).ready(function () {
-            $("#g-4").addClass('active');
-            $("#g-4-2").addClass('active');
+            $("#g-11").addClass('active');
+            $("#g-11-2").addClass('active');
         })
     </script>
 {% endblock %}

@@ -4,8 +4,8 @@
     <section class="content-header">
         <h1>微电影管理系统</h1>
         <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> 预告管理</a></li>
-            <li class="active">预告列表</li>
+            <li><a href="#"><i class="fa fa-dashboard"></i> 日志管理</a></li>
+            <li class="active">会员登录日志列表</li>
         </ol>
     </section>
     <section class="content" id="showcontent">
@@ -13,7 +13,7 @@
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">预告列表</h3>
+                        <h3 class="box-title">会员登录日志列表</h3>
                         <div class="box-tools">
                             <div class="input-group input-group-sm" style="width: 150px;">
                                 <input type="text" name="table_search" class="form-control pull-right"
@@ -28,36 +28,32 @@
                     </div>
                     <div class="box-body table-responsive no-padding">
                         <table class="table table-hover">
-                            {% include 'admin/alert_info.html' %}
                             <tbody>
                             <tr>
                                 <th>编号</th>
-                                <th>预告标题</th>
-                                <th>预告封面</th>
-                                <th>添加时间</th>
-                                <th>操作事项</th>
+                                <th>会员</th>
+                                <th>登录时间</th>
+                                <th>登录IP</th>
                             </tr>
-                            {% for preview in range(11) %}
-                                <tr>
-                                    <td>preview.id</td>
-                                    <td>preview.title</td>
-                                    <td>
-                                        <img src="" style="max-height: 50px" data-src="holder.js/140x64" class="img-responsive center-block"
-                                             alt="">
-                                    </td>
-                                    <td>preview.add_time</td>
-                                    <td>
-                                        <a class="label label-success" href="#">编辑</a>
-                                        &nbsp;
-                                        <a class="label label-danger" href="#">删除</a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                            <tr>
+                                <td>1</td>
+                                <td>张小明</td>
+                                <td>2017-06-01</td>
+                                <td>192.168.4.1</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="box-footer clearfix">
-                        {% import 'admin/pagination.html' as pg %}
+                        <ul class="pagination pagination-sm no-margin pull-right">
+                            <li><a href="#">首页</a></li>
+                            <li><a href="#">上一页</a></li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">下一页</a></li>
+                            <li><a href="#">尾页</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -69,8 +65,8 @@
     <script>
         // 激活菜单栏
         $(document).ready(function () {
-            $("#g-4").addClass('active');
-            $("#g-4-2").addClass('active');
+            $("#g-8").addClass('active');
+            $("#g-8-3").addClass('active');
         })
     </script>
 {% endblock %}
