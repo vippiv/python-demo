@@ -52,7 +52,8 @@ class TagForm(FlaskForm):
             "class": "form-control",
             "placeholder": "请输入标签名",
             "required": 'required'
-        }
+        },
+        description="标签"
     )
     submit = SubmitField(
         label="添加",
@@ -64,6 +65,5 @@ class TagForm(FlaskForm):
     def validate_name(self, field):
         name = field.data
         tag = Tag.query.filter_by(name=name).count()
-        print("%s", tag)
         if tag > 0:
             raise ValidationError('tag已存在')

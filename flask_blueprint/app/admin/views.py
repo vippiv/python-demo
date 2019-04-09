@@ -59,7 +59,7 @@ def pwd():
 
 # 添加标签
 @admin.route('/tag/add/', methods=["GET", "POST"])
-# @admin_login_req
+@admin_login_req
 def tag_add():
     form = TagForm()
     if form.validate_on_submit():
@@ -67,15 +67,49 @@ def tag_add():
         tag = Tag(name=data['name'], addtime=datetime.utcnow())
         db.session.add(tag)
         db.session.commit()
-        return redirect(url_for('admin.tag_list'))
+        flash('添加成功！', 'ok')
+        return redirect(url_for('admin.tag_add'))
     return render_template("admin/tag_add.html", form=form)
 
 
+# 编辑标签
+@admin.route('/tag/edit/<id>', methods=["GET", "POST"])
+# @admin_login_req
+def tag_edit(id):
+    form = TagForm()
+    tag = Tag.query.filter_by(id=id).first_or_404()
+    if form.validate_on_submit():
+        data = form.data
+        tag_count = Tag.query.filter_by(name=data['name']).count()
+        if tag.name != data['name'] and tag_count > 0:
+            flash("该标签已经存在", "fail")
+            return redirect(url_for('admin.tag_edit'))
+        tag.name = data['name']
+        db.session.add(tag)
+        db.session.commit()
+        flash('修改成功！', 'ok')
+        return redirect(url_for('admin.tag_edit', id=id))
+    return render_template("admin/tag_edit.html", form=form, tag=tag)
+
+
 # 标签列表
-@admin.route('/tag/list/')
+@admin.route('/tag/list/<page>')
 @admin_login_req
-def tag_list():
-    return render_template("admin/tag_list.html")
+def tag_list(page):
+    page = int(page)
+    tags = Tag.query.order_by('-addtime').paginate(page=page, per_page=5)
+    return render_template("admin/tag_list.html", tags=tags)
+
+
+# 删除标签
+@admin.route('/tag/del/<id>')
+@admin_login_req
+def tag_del(id):
+    tag = Tag.query.filter_by(id=id).first_or_404()
+    db.session.delete(tag)
+    db.session.commit()
+    flash('删除成功', 'ok')
+    return redirect(url_for('admin.tag_list', page=1))
 
 
 # 添加电影

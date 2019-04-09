@@ -1,4 +1,5 @@
 {% extends 'admin/grid.html' %}
+{% import 'ui/admin_page.html' as pg%}
 
 {% block content %}
     <section class="content-header">
@@ -27,31 +28,31 @@
                         </div>
                     </div>
                     <div class="box-body table-responsive no-padding">
-
-                                <!--<div class="alert alert-success alert-dismissible">-->
-                                    <!--<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>-->
-                                    <!--<h4><i class="icon fa fa-check"></i> 成功!</h4>-->
-                                    <!---->
-                                <!--</div>-->
-
+                            {% for msg in get_flashed_messages(category_filter=["ok"]) %}
+                                <div class="alert alert-success alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                    <h4><i class="icon fa fa-check"></i> 成功!</h4>
+                                    <p>{{msg}}</p>
+                                </div>
+                            {% endfor %}
 
                         <table class="table table-hover">
                             <tbody>
-                            <tr>
-                                <th>编号</th>
-                                <th>名称</th>
-                                <th>添加时间</th>
-                                <th>操作事项</th>
-                            </tr>
-                            {% for i in range(11) %}
                                 <tr>
-                                    <td>{{ i }}</td>
-                                    <td>名字</td>
-                                    <td>2019-6-2</td>
+                                    <th>编号</th>
+                                    <th>名称</th>
+                                    <th>添加时间</th>
+                                    <th>操作事项</th>
+                                </tr>
+                            {% for tag in tags.items %}
+                                <tr>
+                                    <td>{{ tag.id }}</td>
+                                    <td>{{ tag.name }}</td>
+                                    <td>{{ tag.addtime }}</td>
                                     <td>
-                                        <a class="label label-success" href="#">编辑</a>
+                                        <a class="label label-success" href="{{url_for('admin.tag_edit', id=tag.id)}}">编辑</a>
                                         &nbsp;
-                                        <a class="label label-danger" href="#">删除</a>
+                                        <a class="label label-danger" href="{{url_for('admin.tag_del', id=tag.id)}}">删除</a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -60,7 +61,7 @@
                     </div>
                     <div class="box-footer clearfix">
                         <!--页码模块-->
-                        分页
+                        {{pg.page(tags, 'admin.tag_list')}}
                     </div>
                 </div>
             </div>
