@@ -34,19 +34,17 @@
 
 
                             <div class="form-group">
-                                {#<label for="input_name">标签名称</label>#}
-                                {#<input type="text" class="form-control" id="input_name" placeholder="请输入标签名称！">#}
-                                <label for="input_name">标签名称</label>
-                                <input type="text" class="form-control">
-
-                                    <div class="col-md-12" style="color: red">错误</div>
-
+                                {{form.name.label}}
+                                {{form.name}}
+                                {% for err in form.name.errors %}
+                                    <div class="col-md-12" style="color: red">{{ err }}</div>
+                                {% endfor %}
                             </div>
                         </div>
 
                         <div class="box-footer">
-                            {#<button type="submit" class="btn btn-primary">添加</button>#}
-                            <button type="submit" class="btn btn-primary">添加</button>
+                            {{ form.csrf_token }}
+                            {{form.submit}}
                         </div>
                     </form>
                 </div>

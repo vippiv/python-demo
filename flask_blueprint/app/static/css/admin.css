@@ -1,6 +1,12 @@
 .no-border{
     border:none !important;
 }
+.text-center{
+    text-align: center;
+}
+.red{
+    color: red;
+}
 .user_main{
     position: fixed;
     left: 0;

@@ -6,20 +6,42 @@
 
 {% block main %}
     <div class="user_main">
-        <form action="" method="post">
+        <form method="post">
             <h1 class="text-center login_text">微电影管理系统</h1>
+            {% for msg in get_flashed_messages() %}
+                <p class="red text-center">{{msg}}</p>
+            {% endfor %}
             <div class="row form-group">
-                <div class="col-md-2"><label for="username">账号: </label></div>
-                <div class="col-md-10"><input type="text" class="form-control" name="username" id="username" placeholder="用户名"></div>
+                <div class="col-md-2">
+                    {{form.account.label}}
+                </div>
+                <div class="col-md-10">
+                    {{form.account}}
+                    <div class="col-md-12 red">
+                        {% for err in form.account.errors %}
+                            {{err}}
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
             <div class="row form-group">
-                <div class="col-md-2"><label for="password">密码: </label></div>
-                <div class="col-md-10"><input type="text" class="form-control" name="password" id="password" placeholder="密码"></div>
+                <div class="col-md-2">
+                    {{form.pwd.label}}
+                </div>
+                <div class="col-md-10">
+                    {{form.pwd}}
+                    <div class="col-md-12 red">
+                        {% for err in form.pwd.errors %}
+                            {{err}}
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-2"></div>
                 <div class="col-md-10 text-right">
-                    <button type="submit" class="btn btn-primary">登录</button>
+                   {{ form.submit }}
+                   {{ form.csrf_token }}
                     <button type="reset" class="btn btn-default">重置</button>
                 </div>
             </div>

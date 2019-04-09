@@ -1,5 +1,6 @@
 from exts import db
 from datetime import datetime
+from werkzeug.security import check_password_hash
 
 
 # 会员
@@ -138,6 +139,10 @@ class Admin(db.Model):
 
     def __repr__(self):
         return "<Admin %s>" % self.username
+
+    # 验证存储的密码和传递过来的密码
+    def check_pwd(self, pwd):
+        return check_password_hash(self.pwd, pwd)
 
 
 # 管理员日志
