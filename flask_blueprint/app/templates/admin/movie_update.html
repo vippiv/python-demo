@@ -38,14 +38,15 @@
 
                             <div class="form-group">
                                 {{ form.movie_name.label }}
-                                {{ form.movie_name }}
+                                {{ form.movie_name(value=movie.title) }}
                                 {% for err in form.movie_name.errors %}
                                     <div class="col-md-12 red">{{err}}</div>
                                 {% endfor %}
                             </div>
+                            <!--TODO 前台显示数据不一致-->
                             <div class="form-group">
                                 {{ form.movie_url.label }}
-                                {{ form.movie_url }}
+                                {{ form.movie_url(value=movie.url) }}
                                 {% for err in form.movie_url.errors %}
                                     <div class="col-md-12 red">{{err}}</div>
                                 {% endfor %}
@@ -55,49 +56,49 @@
                             </div>
                             <div class="form-group">
                                 {{ form.movie_desc.label }}
-                                {{ form.movie_desc }}
+                                {{ form.movie_desc(value=movie.info) }}
                                 {% for err in form.movie_desc.errors %}
                                     <div class="col-md-12 red">{{err}}</div>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ form.movie_logo.label }}
-                                {{ form.movie_logo }}
+                                {{ form.movie_logo(value=movie.logo) }}
                                 {% for err in form.movie_logo.errors %}
                                     <div class="col-md-12 red">{{err}}</div>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ form.movie_star.label }}
-                                {{ form.movie_star }}
+                                {{ form.movie_star(value=movie.star) }}
                                 {% for err in form.movie_star.errors %}
                                     <div class="col-md-12 red">{{err}}</div>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ form.movie_id.label }}
-                                {{ form.movie_id }}
+                                {{ form.movie_id(value=movie.tag_id) }}
                                 {% for err in form.movie_id.errors %}
                                     <div class="col-md-12 red">{{err}}</div>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ form.movie_address.label }}
-                                {{ form.movie_address }}
+                                {{ form.movie_address(value=movie.area) }}
                                 {% for err in form.movie_address.errors %}
                                     <div class="col-md-12 red">{{err}}</div>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ form.movie_duration.label }}
-                                {{ form.movie_duration }}
+                                {{ form.movie_duration(value=movie.duration) }}
                                 {% for err in form.movie_duration.errors %}
                                     <div class="col-md-12 red">{{err}}</div>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
                                 {{ form.movie_date.label }}
-                                {{ form.movie_date }}
+                                {{ form.movie_date(value=movie.realse_time) }}
                                 {% for err in form.movie_date.errors %}
                                     <div class="col-md-12 red">{{err}}</div>
                                 {% endfor %}

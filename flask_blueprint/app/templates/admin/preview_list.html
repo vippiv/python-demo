@@ -1,4 +1,5 @@
 {% extends 'admin/grid.html' %}
+{% import 'ui/admin_page.html' as pg %}
 
 {% block content %}
     <section class="content-header">
@@ -37,19 +38,19 @@
                                 <th>添加时间</th>
                                 <th>操作事项</th>
                             </tr>
-                            {% for preview in range(11) %}
+                            {% for preview in previews.items %}
                                 <tr>
-                                    <td>preview.id</td>
-                                    <td>preview.title</td>
+                                    <td>{{ preview.id }}</td>
+                                    <td>{{ preview.title }}</td>
                                     <td>
-                                        <img src="" style="max-height: 50px" data-src="holder.js/140x64" class="img-responsive center-block"
+                                        <img src="{{ preview.logo }}" style="max-height: 50px" data-src="holder.js/140x64" class="img-responsive center-block"
                                              alt="">
                                     </td>
-                                    <td>preview.add_time</td>
+                                    <td>{{ preview.add_time }}</td>
                                     <td>
-                                        <a class="label label-success" href="#">编辑</a>
+                                        <a class="label label-success" href="{{url_for('admin.preview_update', id=preview.id)}}">编辑</a>
                                         &nbsp;
-                                        <a class="label label-danger" href="#">删除</a>
+                                        <a class="label label-danger" href="{{url_for('admin.preview_delete', id=preview.id)}}">删除</a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -57,7 +58,7 @@
                         </table>
                     </div>
                     <div class="box-footer clearfix">
-                        {% import 'admin/pagination.html' as pg %}
+                        {{pg.page(previews, 'admin.preview_list')}}
                     </div>
                 </div>
             </div>

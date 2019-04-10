@@ -1,0 +1,7 @@
+定位到项目文件夹
+
+python manage.py db init  # 初始化
+
+python manage.py db migrate # 数据库部署
+
+python manage.py db upgrade # 数据库更新

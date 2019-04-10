@@ -1,8 +1,8 @@
 from . import admin
 from flask import render_template, redirect, url_for, request, session, flash
-from models import Admin, Tag
+from models import Admin, Tag, Movie, Preview, User
 from exts import db
-from app.admin.forms import LoginForm, TagForm
+from app.admin.forms import LoginForm, TagForm, MovieForm, PreviewForm
 from functools import wraps
 from datetime import datetime
 
@@ -74,7 +74,7 @@ def tag_add():
 
 # 编辑标签
 @admin.route('/tag/edit/<id>', methods=["GET", "POST"])
-# @admin_login_req
+@admin_login_req
 def tag_edit(id):
     form = TagForm()
     tag = Tag.query.filter_by(id=id).first_or_404()
@@ -113,45 +113,149 @@ def tag_del(id):
 
 
 # 添加电影
-@admin.route('/movie_add/')
+@admin.route('/movie_add/', methods=["GET", "POST"])
 @admin_login_req
 def movie_add():
-    return render_template("admin/movie_add.html")
+    form = MovieForm()
+    if form.validate_on_submit():
+        data = form.data
+        movie = Movie(
+            title=data['movie_name'],
+            url=data['movie_url'],
+            info=data['movie_desc'],
+            star=data['movie_star'],
+            logo=data['movie_logo'],
+            tag_id=data['movie_id'],
+            area=data['movie_address'],
+            duration=data['movie_duration'],
+            realse_time=data['movie_date']
+        )
+        db.session.add(movie)
+        db.session.commit()
+        flash('添加成功！', 'ok')
+    return render_template("admin/movie_add.html", form=form)
+
+
+# 编辑电影
+@admin.route('/movie_update/<id>', methods=["GET", "POST"])
+@admin_login_req
+def movie_update(id):
+    form = MovieForm()
+    movie = Movie.query.filter_by(id=id).first_or_404()
+    if form.validate_on_submit():
+        data = form.data
+        movie.title = data['movie_name']
+        movie.url = data['movie_url']
+        movie.info = data['movie_desc']
+        movie.star = data['movie_star']
+        movie.logo = data['movie_logo']
+        movie.tag_id = data['movie_id']
+        movie.area = data['movie_address']
+        movie.duration = data['movie_duration']
+        movie.realse_time = data['movie_date']
+        flash("修改成功！", 'ok')
+        return redirect(url_for('admin.movie_update', id=id))
+    return render_template("admin/movie_update.html", form=form, movie=movie)
+
+
+# 删除电影
+@admin.route('/movie_delete/<id>')
+@admin_login_req
+def movie_delete(id):
+    movie = Movie.query.filter_by(id=id).first_or_404()
+    db.session.delete(movie)
+    db.session.commit()
+    flash("删除成功！", "ok")
+    return redirect(url_for('admin.movie_list', page=1))
 
 
 # 电影列表
-@admin.route('/movie_list/')
+@admin.route('/movie_list/<page>')
 @admin_login_req
-def movie_list():
-    return render_template("admin/movie_list.html")
+def movie_list(page):
+    page = int(page)
+    movies = Movie.query.order_by('id').paginate(page=page, per_page=5)
+    return render_template("admin/movie_list.html", movies=movies)
 
 
 # 添加预告
-@admin.route('/preview_add/')
+@admin.route('/preview_add/', methods=["GET", "POST"])
 @admin_login_req
 def preview_add():
-    return render_template("admin/preview_edit.html")
+    form = PreviewForm()
+    if form.validate_on_submit():
+        data = form.data
+        preview = Preview(
+            title=data['title'],
+            logo=data['logo']
+        )
+        db.session.add(preview)
+        db.session.commit()
+        flash("添加成功！", "ok")
+    return render_template("admin/preview_add.html", form=form)
+
+
+# 编辑预告
+@admin.route("/preview_update/<id>")
+@admin_login_req
+def preview_update(id):
+    form = PreviewForm()
+    preview = Preview.query.filter_by(id=id).first_or_404()
+    if form.validate_on_submit():
+        data = form.data
+        preview.title = data['title']
+        preview.logo = data['logo']
+        db.session.add(preview)
+        db.session.commit()
+    return render_template("admin/preview_update.html", form=form, preview=preview)
+
+
+# 删除预告
+@admin.route("/preview_delete/<id>")
+@admin_login_req
+def preview_delete(id):
+    preview = Preview.query.filter_by(id=id).first_or_404()
+    db.session.delete(preview)
+    db.session.commit()
+    flash("删除成功！", 'ok')
+    return redirect(url_for('admin.preview_list', page=1))
 
 
 # 预告列表
-@admin.route('/preview_list/')
+@admin.route('/preview_list/<page>')
 @admin_login_req
-def preview_list():
-    return render_template('admin/preview_list.html')
+def preview_list(page):
+    page = int(page)
+    previews = Preview.query.order_by("id").paginate(page=page, per_page=5)
+    return render_template('admin/preview_list.html', previews=previews)
 
 
 # 会员列表
-@admin.route('/user_list/')
+@admin.route('/user_list/<page>')
 @admin_login_req
-def user_list():
-    return render_template('admin/user_list.html')
+def user_list(page):
+    page = int(page)
+    users = User.query.order_by("id").paginate(page=page, per_page=5)
+    return render_template('admin/user_list.html', users=users)
 
 
 # 查看会员
 @admin.route('/user_view/<id>')
 @admin_login_req
 def user_view(id):
-    return render_template('admin/user_view.html')
+    user = User.query.filter_by(id=id).first_or_404()
+    return render_template('admin/user_view.html', user=user)
+
+
+# 删除会员
+@admin.route('/user_delete/<id>')
+@admin_login_req
+def user_delete(id):
+    user = User.query.filter_by(id=id).first_or_404()
+    db.session.delete(user)
+    db.session.commit()
+    flash("删除成功", "ok")
+    return render_template('admin/user_list.html', page=1)
 
 
 # 评论列表

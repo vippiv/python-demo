@@ -6,10 +6,15 @@ from werkzeug.security import check_password_hash
 # 会员
 class User(db.Model):
     __tablename__ = "user"
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    username = db.Column(db.String(50), nullable=False)
-    mobilephone = db.Column(db.String(11), nullable=False)
-    pwd = db.Column(db.String(100), nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)  # 编号
+    username = db.Column(db.String(50), nullable=False)  # 昵称
+    pwd = db.Column(db.String(100))  # 密码
+    email = db.Column(db.String(100), unique=True)  # 邮箱
+    phone = db.Column(db.String(11), nullable=False)  # 手机号码
+    info = db.Column(db.Text)  # 简介
+    avatar = db.Column(db.String(100))  # 头像
+    add_time = db.Column(db.DateTime, index=True, default=datetime.utcnow)  # 注册时间
+    uuid = db.Column(db.String(100), unique=True)  # 唯一标识符
 
     userlogs = db.relationship("Userlog", backref='users')
     comments = db.relationship("Comment", backref='users')
@@ -48,14 +53,15 @@ class Movie(db.Model):
     __tablename__ = "movie"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False, unique=True)
-    url = db.Column(db.String(100), nullable=False, unique=True)
+    url = db.Column(db.String(100), nullable=False)
     info = db.Column(db.Text, nullable=False)
-    logo = db.Column(db.String(100), nullable=False, unique=True)
+    logo = db.Column(db.String(100), nullable=False)
     star = db.Column(db.SmallInteger, nullable=False)
-    playnum = db.Column(db.BigInteger, nullable=False)
-    commentnum = db.Column(db.BigInteger, nullable=False)
+    playnum = db.Column(db.BigInteger)
+    commentnum = db.Column(db.BigInteger)
     tag_id = db.Column(db.Integer, db.ForeignKey('tag.id'))
-    area = db.Column(db.String(100), nullable=False, unique=True)
+    area = db.Column(db.String(100), nullable=False)
+    duration = db.Column(db.String(100), nullable=False)
     realse_time = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     comments = db.relationship("Comment", backref='movie')
     moviecol = db.relationship("Moviecol", backref='movie')
@@ -69,7 +75,7 @@ class Preview(db.Model):
     __tablename__ = "preview"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False, unique=True)
-    logo = db.Column(db.String(100), nullable=False, unique=True)
+    logo = db.Column(db.String(100), nullable=False)
     add_time = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
