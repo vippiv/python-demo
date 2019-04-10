@@ -1,4 +1,5 @@
 {% extends 'admin/grid.html' %}
+{% import 'ui/admin_page.html' as pg %}
 
 {% block css %}
 {% endblock %}
@@ -32,28 +33,28 @@
                     <div class="box-body box-comments">
                         {% include 'admin/alert_info.html' %}
 
-                        {% for comment in range(11) %}
+                        {% for comment in comments.items %}
                             <div class="box-comment">
                                 <img class="img-circle img-sm"
-                                     src="#" alt="User Image">
+                                     src="{{ comment.users.avatar }}" alt="User Image" width="50px" data-src="holder.js/50x50" class="img-responsive center-block">
                                 <div class="comment-text">
                                     <span class="username">
-                                        comment.user.name
+                                        {{ comment.users.name }}
                                         <span class="text-muted pull-right">
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
                                             &nbsp;
-                                            comment.add_time
+                                            {{ comment.add_time }}
                                         </span>
                                     </span>
-                                    关于电影<a>《comment.movie.title》</a>的评论：comment.content
+                                    关于电影<a>《{{ comment.movie.title }}》</a>的评论：{{ comment.content }}
                                     <br>
-                                    <a class="label label-danger pull-right" href="#">删除</a>
+                                    <a class="label label-danger pull-right" href="{{url_for('admin.comment_delete', id=comment.id)}}">删除</a>
                                 </div>
                             </div>
                         {% endfor %}
                     </div>
                     <div class="box-footer clearfix">
-                        {% import 'admin/pagination.html' as pg %}
+                        {{ pg.page(comments, 'admin.comment_list')}}
                     </div>
                 </div>
             </div>

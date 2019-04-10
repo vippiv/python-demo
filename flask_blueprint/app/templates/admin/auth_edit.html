@@ -31,18 +31,23 @@
                         <div class="box-body">
                             {% include 'admin/alert_info.html' %}
                             <div class="form-group">
-                                <label for="input_name">姓名</label>
-                                form.name
-                                <div class="col-md-12" style="color: red">err</div>
+                                {{ form.name.label }}
+                                {{ form.name }}
+                                {% for err in form.name.errors %}
+                                    <div class="col-md-12 red">{{err}}</div>
+                                {% endfor %}
                             </div>
                             <div class="form-group">
-                                <label for="input_url">标签</label>
-                                form.url
-                                <div class="col-md-12" style="color: red">err</div>
+                                {{ form.url.label }}
+                                {{ form.url }}
+                                {% for err in form.url.errors %}
+                                    <div class="col-md-12 red">{{err}}</div>
+                                {% endfor %}
                             </div>
                         </div>
                         <div class="box-footer">
-                            <button class="btn btn-primary">提交</button>
+                            {{ form.csrf_token }}
+                            {{ form.submit }}
                         </div>
                     </form>
                 </div>

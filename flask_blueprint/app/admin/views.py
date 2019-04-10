@@ -1,8 +1,8 @@
 from . import admin
 from flask import render_template, redirect, url_for, request, session, flash
-from models import Admin, Tag, Movie, Preview, User
+from models import Admin, Tag, Movie, Preview, User, Comment, Moviecol, Auth
 from exts import db
-from app.admin.forms import LoginForm, TagForm, MovieForm, PreviewForm
+from app.admin.forms import LoginForm, TagForm, MovieForm, PreviewForm, AdminForm, AuthForm, RoleForm
 from functools import wraps
 from datetime import datetime
 
@@ -259,24 +259,49 @@ def user_delete(id):
 
 
 # 评论列表
-@admin.route('/comment_list/')
+@admin.route('/comment_list/<page>')
 @admin_login_req
-def comment_list():
-    return render_template('admin/comment_list.html')
+def comment_list(page):
+    page = int(page)
+    comments = Comment.query.join(Movie).join(User).filter(
+        Movie.id == Comment.movie_id,
+        User.id == Comment.user_id
+    ).order_by("id").paginate(page=page, per_page=5)
+    return render_template('admin/comment_list.html', comments=comments)
+
+
+# 删除评论
+@admin.route("/comment_delete/<id>")
+@admin_login_req
+def comment_delete(id):
+    comment = Comment.query.filter_by(id=id).first_or_404()
+    db.session.delete(comment)
+    db.session.commit()
+    flash("删除成功！", "ok")
+    return redirect(url_for('admim.comment_list', page=1))
 
 
 # 收藏列表
-@admin.route('/collect_list/')
+@admin.route('/collect_list/<page>')
 @admin_login_req
-def collect_list():
-    return render_template('admin/collect_list.html')
+def collect_list(page):
+    page = int(page)
+    cols = Moviecol.query.join(Movie).join(User).filter(
+        Movie.id == Moviecol.movie_id,
+        User.id == Moviecol.user_id
+    ).order_by('id').paginate(page=page, per_page=5)
+    return render_template('admin/collect_list.html', cols=cols)
 
 
 # 删除收藏
-@admin.route('/collect_list/')
+@admin.route('/collect_delete/<id>')
 @admin_login_req
-def collect_delete():
-    return '删除成功'
+def collect_delete(id):
+    col = Moviecol.query.filter_by(id=id).first_or_404()
+    db.session.delete(col)
+    db.session.commit()
+    flash('删除成功！', "ok")
+    return redirect(url_for('admin.collect_list', page=1))
 
 
 # 管理员登录日志列表
@@ -301,10 +326,17 @@ def logs_user_log():
 
 
 # 添加权限
-@admin.route('/auth_add/')
+@admin.route('/auth_add/', methods=["GET", "POST"])
 @admin_login_req
 def auth_add():
-    return render_template('admin/auth_edit.html')
+    form = AuthForm()
+    if form.validate_on_submit():
+        data = form.data
+        auth = Auth(name=data['name'], url=data['url'])
+        db.session.add(auth)
+        db.session.commit()
+        flash("添加成功！", "ok")
+    return render_template('admin/auth_edit.html', form=form)
 
 
 # 权限编辑
@@ -332,7 +364,8 @@ def auth_list():
 @admin.route('/role_add/')
 @admin_login_req
 def role_add():
-    return render_template('admin/role_edit.html')
+    form = RoleForm()
+    return render_template('admin/role_edit.html', form=form)
 
 
 # 角色编辑
@@ -360,7 +393,8 @@ def role_list():
 @admin.route('/admin_add/')
 @admin_login_req
 def admin_add():
-    return render_template('admin/admin_edit.html')
+    form = AdminForm()
+    return render_template('admin/admin_add.html', form=form)
 
 
 # 管理员列表

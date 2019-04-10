@@ -19,28 +19,37 @@
                         {% include 'admin/alert_info.html' %}
                         <div class="box-body">
                             <div class="form-group">
-                                <label for="input_name">管理员名</label>
-                                form.name
-                                <div class="col-md-12" style="color: red">err</div>
+                                {{ form.name.label }}
+                                {{ form.name }}
+                                {% for err in form.name.errors %}
+                                    <div class="col-md-12 red">{{err}}</div>
+                                {% endfor %}
                             </div>
                             <div class="form-group">
-                                <label for="input_pwd">密码</label>
-                                form.pwd
-                                <div class="col-md-12" style="color: red">err</div>
+                                {{ form.pwd.label }}
+                                {{ form.pwd }}
+                                {% for err in form.pwd.errors %}
+                                    <div class="col-md-12 red">{{err}}</div>
+                                {% endfor %}
                             </div>
                             <div class="form-group">
-                                <label for="input_re_pwd">重复密码</label>
-                                form.repwd
-                                <div class="col-md-12" style="color: red">err</div>
+                                {{ form.repwd.label }}
+                                {{ form.repwd }}
+                                {% for err in form.repwd.errors %}
+                                    <div class="col-md-12 red">{{err}}</div>
+                                {% endfor %}
                             </div>
                             <div class="form-group">
-                                <label for="input_role_id">角色</label>
-                                form.role_id
-                                <div class="col-md-12" style="color: red">err</div>
+                                {{ form.role_id.label }}
+                                {{ form.role_id }}
+                                {% for err in form.role_id.errors %}
+                                    <div class="col-md-12 red">{{err}}</div>
+                                {% endfor %}
                             </div>
                         </div>
                         <div class="box-footer">
-                            <button class="btn btn-primary">提交</button>
+                            {{ form.csrf_token }}
+                            {{ form.submit }}
                         </div>
                     </form>
                 </div>
