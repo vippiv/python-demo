@@ -126,6 +126,7 @@ class Role(db.Model):
     name = db.Column(db.String(100), nullable=False, unique=True)
     auths = db.Column(db.String(600), nullable=False)
     add_time = db.Column(db.DateTime, default=datetime.utcnow)
+    admin = db.relationship("Admin", backref='role')
 
     def __repr__(self):
         return '<Role %s>' % self.name

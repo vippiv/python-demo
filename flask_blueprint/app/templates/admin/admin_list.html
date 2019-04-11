@@ -1,4 +1,5 @@
 {% extends 'admin/grid.html' %}
+{% import 'ui/admin_page.html' as pg %}
 
 {% block content %}
     <section class="content-header">
@@ -37,20 +38,20 @@
                                 <th>管理员角色</th>
                                 <th>添加时间</th>
                             </tr>
-                            {% for admin in range(11) %}
+                            {% for admin in admins.items %}
                                 <tr>
-                                    <td>admin.id</td>
-                                    <td>admin.name</td>
+                                    <td>{{ admin.id }}</td>
+                                    <td>{{ admin.username }}</td>
                                     <td>{% if admin.is_super == 0 %}超级管理员{% else %}普通管理员{% endif %}</td>
-                                    <td>admin.role.name</td>
-                                    <td>admin.add_time</td>
+                                    <td>{{ admin.role.name }}</td>
+                                    <td>{{ admin.add_time }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
                     </div>
                     <div class="box-footer clearfix">
-                        {% import 'admin/pagination.html' as pg %}
+                        {{ pg.page(admins, 'admin.admin_list') }}
                     </div>
                 </div>
             </div>

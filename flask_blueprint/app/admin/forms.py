@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, FileField, SelectField, SelectMultipleField
 from wtforms.validators import DataRequired, ValidationError
-from models import Admin, Tag, Auth
+from models import Admin, Tag, Auth, Role
 
 
 class LoginForm(FlaskForm):
@@ -194,7 +194,7 @@ class AdminForm(FlaskForm):
     """管理员表单"""
     def __init__(self, *args, **kwargs):
         super(AdminForm, self).__init__(*args, **kwargs)
-        self.role_id.choices = [(v.id, v.name) for v in Tag.query.all()]
+        self.role_id.choices = [(v.id, v.name) for v in Role.query.all()]
 
     name = StringField(
         label="管理员名",
