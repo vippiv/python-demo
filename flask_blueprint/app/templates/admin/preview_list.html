@@ -43,7 +43,7 @@
                                     <td>{{ preview.id }}</td>
                                     <td>{{ preview.title }}</td>
                                     <td>
-                                        <img src="{{ preview.logo }}" style="max-height: 50px" data-src="holder.js/140x64" class="img-responsive center-block"
+                                        <img src="{{ url_for('static', filename='uploadmedia/'+preview.logo) }}" style="max-height: 50px" data-src="holder.js/140x64" class="img-responsive center-block"
                                              alt="">
                                     </td>
                                     <td>{{ preview.add_time }}</td>

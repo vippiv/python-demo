@@ -1,4 +1,5 @@
 {% extends 'admin/grid.html' %}
+{% import 'ui/admin_page.html' as pg %}
 
 {% block content %}
     <section class="content-header">
@@ -35,25 +36,19 @@
                                 <th>登录时间</th>
                                 <th>登录IP</th>
                             </tr>
+                            {% for log in adminlogs.items %}
                             <tr>
-                                <td>1</td>
-                                <td>admin</td>
-                                <td>2017-06-01</td>
-                                <td>192.168.4.1</td>
+                                <td>{{ log.id }}</td>
+                                <td>{{ log.admin.username }}</td>
+                                <td>{{ log.addtime }}</td>
+                                <td>{{ log.ip }}</td>
                             </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
                     <div class="box-footer clearfix">
-                        <ul class="pagination pagination-sm no-margin pull-right">
-                            <li><a href="#">首页</a></li>
-                            <li><a href="#">上一页</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">下一页</a></li>
-                            <li><a href="#">尾页</a></li>
-                        </ul>
+                        {{pg.page(adminlogs, 'admin.logs_admin_log')}}
                     </div>
                 </div>
             </div>

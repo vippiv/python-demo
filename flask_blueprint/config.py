@@ -19,4 +19,4 @@ SQLALCHEMY_DATABASE_URI = '{}+{}://{}:{}@{}:{}/{}?charset=utf8'.format(DIALECT, 
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-
+UP_DIR = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'app/static/uploadmedia/')

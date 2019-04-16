@@ -1,11 +1,24 @@
 from . import admin
+from app import app
 from flask import render_template, redirect, url_for, request, session, flash
-from models import Admin, Tag, Movie, Preview, User, Comment, Moviecol, Auth, Role
+from models import Admin, Tag, Movie, Preview, User, Comment, Moviecol, Auth, Role, Oplog, Adminlog, Userlog
 from exts import db
 from app.admin.forms import LoginForm, TagForm, MovieForm, PreviewForm, AdminForm, AuthForm, RoleForm
 from functools import wraps
 from datetime import datetime
 from werkzeug.security import generate_password_hash
+from werkzeug.utils import secure_filename
+import os
+import uuid  # 生成唯一字符串
+
+
+# 上下文装饰器
+@admin.context_processor
+def tpl_extra():
+    data = dict(
+        online_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    )
+    return data
 
 
 # 登录限制装饰器
@@ -18,6 +31,13 @@ def admin_login_req(func):
         else:
             return redirect(url_for('admin.login'))
     return wrapper
+
+
+# 修改文件名称
+def change_filename(filename):
+    fileinfo = os.path.splitext(filename)  # 分离包含路径的文件名与包含点号的扩展名
+    filename = datetime.now().strftime("%Y%m%d%H%M%S") + str(uuid.uuid4().hex + fileinfo[-1])
+    return filename
 
 
 # 首页
@@ -39,6 +59,13 @@ def login():
             return redirect(url_for('admin.login'))
         else:
             session['admin'] = data["account"]
+            session['admin_id'] = admin.id
+            adminlog = Adminlog(
+                admin_id=admin.id,
+                ip=request.remote_addr
+            )
+            db.session.add(adminlog)
+            db.session.commit()
             return render_template('admin/index.html')
     return render_template("admin/login.html", form=form)
 
@@ -48,6 +75,7 @@ def login():
 @admin_login_req
 def logout():
     session.pop('admin', None)
+    session.pop('admin_id', None)
     return redirect(url_for('admin.login'))
 
 
@@ -69,6 +97,13 @@ def tag_add():
         db.session.add(tag)
         db.session.commit()
         flash('添加成功！', 'ok')
+        oplog = Oplog(
+            admin_id=session['admin_id'],
+            ip=request.remote_addr,
+            reason="添加标签：%s" % data['name']
+        )
+        db.session.add(oplog)
+        db.session.commit()
         return redirect(url_for('admin.tag_add'))
     return render_template("admin/tag_add.html", form=form)
 
@@ -110,6 +145,13 @@ def tag_del(id):
     db.session.delete(tag)
     db.session.commit()
     flash('删除成功', 'ok')
+    oplog = Oplog(
+        admin_id=session['admin_id'],
+        ip=request.remote_addr,
+        reason="删除标签：%s" % tag.name
+    )
+    db.session.add(oplog)
+    db.session.commit()
     return redirect(url_for('admin.tag_list', page=1))
 
 
@@ -186,9 +228,19 @@ def preview_add():
     form = PreviewForm()
     if form.validate_on_submit():
         data = form.data
+
+        file_logo = secure_filename(form.data['logo'].filename)  # 获取上传文件名字
+        file_save_path = app.config['UP_DIR']  # 文件上传保存路径
+        if not os.path.exists(file_save_path):
+            os.makedirs(file_save_path)  # 如果文件保存路径不存在，则创建一个多级目录
+            import stat
+            os.chmod(file_save_path, stat.S_IRWXU)  # 授予可读写权限
+        logo = change_filename(file_logo)  # 文件重命名
+        form.data['logo'].save(file_save_path + logo)  # 保存文件到磁盘中
+
         preview = Preview(
             title=data['title'],
-            logo=data['logo']
+            logo=logo
         )
         db.session.add(preview)
         db.session.commit()
@@ -306,17 +358,21 @@ def collect_delete(id):
 
 
 # 管理员操作日志列表
-@admin.route('/logs_operate_log/')
+@admin.route('/logs_operate_log/<page>')
 @admin_login_req
-def logs_operate_log():
-    return render_template('admin/logs_operate_log.html')
+def logs_operate_log(page):
+    page = int(page)
+    oplogs = Oplog.query.join(Admin).order_by('id').paginate(page=page, per_page=5)
+    return render_template('admin/logs_operate_log.html', oplogs=oplogs)
 
 
 # 管理员登录日志列表
-@admin.route('/logs_admin_log/')
+@admin.route('/logs_admin_log/<page>')
 @admin_login_req
-def logs_admin_log():
-    return render_template('admin/logs_admin_log.html')
+def logs_admin_log(page):
+    page = int(page)
+    adminlogs = Adminlog.query.join(Admin).filter(Admin.id == Adminlog.admin_id).order_by('id').paginate(page=page, per_page=5)
+    return render_template('admin/logs_admin_log.html', adminlogs=adminlogs)
 
 
 # 会员登录日志列表
