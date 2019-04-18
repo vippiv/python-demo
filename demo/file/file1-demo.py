@@ -4,6 +4,7 @@ file = open("hello.txt", encoding='UTF-8')
 
 # 2、读取文件内容，第一次打开时，文件指针会指向文件的开始位置，
 text = file.read()
+
 # 2.1、read()结束后指针指向文件末尾，再次调用read()将读取不到任何内容
 print(text)
 print("读取到的内容长度 %d" % len(text))
