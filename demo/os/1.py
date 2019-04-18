@@ -14,3 +14,7 @@ import os
 # print(os.path.isdir("D:/python/demo/os/ad/"))  # 判断指定路径是否是目录，只有，目录真实存在才返回True
 # print(os.path.realpath("2/4"))  # 返回指定路径的真实绝对路径
 
+# os.chdir('os')
+# print(os.getcwd())
+
+os.mkdir('mkdir')
