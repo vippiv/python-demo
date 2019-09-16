@@ -17,4 +17,6 @@ import os
 # os.chdir('os')
 # print(os.getcwd())
 
-os.mkdir('mkdir')
+# os.mkdir('mkdir')
+
+print(os.path.realpath("hello"))

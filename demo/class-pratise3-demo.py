@@ -20,3 +20,5 @@ w = Women("小美")
 # print(w.__age)  # 这里访问会报错
 # w.__secret()  # 这里访问会报错
 w.secret()
+print(w.name)
+print(w.__age)  # 将会报错

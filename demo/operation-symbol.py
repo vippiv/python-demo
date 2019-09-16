@@ -27,3 +27,14 @@ i = 15
 j = 20
 print(i > j)
 print(i != j)
+
+
+
+
+print("+" * 100)
+print("is运算符和==运算符比较")
+a = [1, 2, 3]
+b = [1, 2, 3]
+print(a == b)  # 只是判断内容是否相等
+print(a is b)  # 判断内存地址是否相同
+print(a is not b)  # 判断内存地址是否相同

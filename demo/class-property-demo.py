@@ -16,7 +16,8 @@ class Tools:
         print("类方法")
 
 
-Tools.read()
+Tools.add_count()
+
 tool1 = Tools("锤子")
 tool2 = Tools("斧子")
 tool3 = Tools("剪刀")
